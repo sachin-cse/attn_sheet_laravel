@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 
 class AttendenceSheetController extends Controller
@@ -116,6 +117,17 @@ class AttendenceSheetController extends Controller
 
                 // return response()->json(['html'=>$view]);
                 return sendAjaxResponse('success', null, $view);
+            }
+        }
+    }
+
+    // mark attn
+    public function markAttendence(Request $request){
+        if($request->method() == 'POST' && $request->ajax()){
+            try{
+                dd($request->all());
+            }catch(Exception $e){
+
             }
         }
     }

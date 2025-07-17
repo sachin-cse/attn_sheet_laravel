@@ -26,6 +26,10 @@ $filter_month = ($filter_month??'') ? $filter_month : date('m');
     <div class="get_result">
         <a href="javascript:void(0);" class="form-control get_filter_val">Get Result</a>
     </div>
+
+    <div class="get_result">
+        <a href="javascript:void(0);" class="form-control mark_attenence" data-href="{{route('attn.mark')}}">Mark Attendence</a>
+    </div>
 <table>
     <thead>
         <tr>
@@ -49,6 +53,7 @@ $filter_month = ($filter_month??'') ? $filter_month : date('m');
         </tr>
     </thead>
     <tbody>
+
         
         @if(count($attn_data) > 0)
             @foreach($attn_data as $name=>$days)

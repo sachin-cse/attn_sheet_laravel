@@ -58,4 +58,43 @@ $(document).ready(function(){
             $('.checked_box').prop('checked', false);
         }
     });
+
+    // mark attenence
+    $(document).off('click', '.mark_attenence').on('click', '.mark_attenence', function(e){
+        e.preventDefault();
+        // alert('Hare Krishna');
+        var checkedVals = $('.checked_box:checkbox:checked').map(function() {
+            return this.value;
+        }).get();
+        var data_href = $(this).attr('data-href');
+
+        if(checkedVals.length != 0){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type:'POST',
+                url:data_href,
+                data:{checkedVals},
+                dataType:'json',
+
+                beforeSend: function() {
+                    $('#loader').show();
+                },
+
+                success:function(response){
+                    $('.attn_table').html(response.html);
+                },
+
+                complete: function() {
+                    $('#loader').hide();
+                },
+            });
+        }
+
+
+    });
 });
