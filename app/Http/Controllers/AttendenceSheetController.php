@@ -125,9 +125,26 @@ class AttendenceSheetController extends Controller
     public function markAttendence(Request $request){
         if($request->method() == 'POST' && $request->ajax()){
             try{
-                dd($request->all());
-            }catch(Exception $e){
 
+                if(count($request->checkedVals) > 0 ){
+                    $values = [];
+                    foreach($request->checkedVals as $key=>$value){
+                        $query = \DB::select('call getUserInfo(?)', [$value]);
+                        // dd('awfew',$query[0]->name);
+                        $values[] = [
+                            'attn_id' => null,
+                            'name' => $query[0]->name,
+                            'attn_date' => date('Y-m-d h:i:s'),
+                            'attn_status'=>1,
+                            'cl_alloted' => 6
+                        ];
+                    }
+
+                    \DB::table('krsnanusilanam_attn')->insert($values);
+                }
+                
+            }catch(Exception $e){
+                dd('Insert failed:', $e->getMessage());
             }
         }
     }
